@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html ng-app="PackTracker">
+<head lang="en">
+    <meta charset="UTF-8">
+    <title></title>
+    <link rel="stylesheet" type="text/css" href="bower_components/bootstrap/dist/css/bootstrap.css">
+    <link rel="stylesheet" type="text/css" href="css/yeti.css">
+    <link rel="stylesheet" type="text/css" href="css/site.css">
+
+    <script src="bower_components/angular/angular.js"></script>
+    <script src="bower_components/angular-resource/angular-resource.min.js"></script>
+    <script src="bower_components/jquery/dist/jquery.js"></script>
+    <script src="bower_components/bootstrap/dist/js/bootstrap.js"></script>
+</head>
+<body>
+<div ng-include="'partials/navBar.html'"></div>
+<div class="row" ng-controller="scoutsCtrl as scouts">
+    <div class="container col-lg-2 col-lg-offset-2">
+        <table class="table table-striped table-hover table-bordered">
+            <tr ng-repeat="scout in scouts.scouts | orderBy: 'name': false">
+                <td><a ng-click="scouts.editScout(scout)" href="#"> {{scout.name}}</a></td>
+            </tr>
+        </table>
+    </div>
+    <div class="container col-lg-8" ng-show="scouts.editing">
+        <form class="form-horizontal">
+            <fieldset>
+                    <div class="navbar navbar-inverse">
+                        <div class="container">
+                            <div class="navbar-header">
+                                <span class="navbar-brand">{{scouts.scoutEdit.name}}</span>
+                                <button class="navbar-toggle collapsed"
+                                        data-toggle="collapse" data-target="#navbar-scout">
+                                    <span class="icon-bar"></span>
+                                    <span class="icon-bar"></span>
+                                    <span class="icon-bar"></span>
+                                </button>
+                            </div>
+
+                            <div class="navbar-collapse collapse" id="navbar-scout">
+                                <ul class="nav navbar-nav">
+                                    <div class="nav navbar-nav">
+                                        <li class="nav" ng-click="scouts.swap(1)" ng-class="{ active: scouts.personal}"><a href="#"><span>Personal</span></a></li>
+                                        <li class="nav" ng-click="scouts.swap(2)" ng-class="{ active: scouts.achievements}"><a href="#"><span>Achievements</span></a></li>
+                                        <li class="nav" ng-click="scouts.swap(3)" ng-class="{ active: scouts.awards}"><a href="#"><span>Awards</span></a></li>
+                                    </div>
+                                </ul>
+
+                            </div>
+                        </div>
+                    </div>
+
+                <div class="form-group" ng-show="scouts.personal">
+                    <div class="row">
+                        <label for="inputEmail" class="col-lg-2 control-label">Email</label>
+
+                        <div class="col-lg-3">
+                            <input type="text" ng-model="scouts.editingScout.email" class="form-control" id="inputEmail"
+                                   placeholder="Email">
+                        </div>
+                        <label for="inputDOB" class="col-lg-1 control-label">BirthDate</label>
+
+                        <div class="col-lg-4">
+                            <input type="date" ng-model="scouts.editingScout.dateOfBirth" class="form-control"
+                                   id="inputDOB">
+                        </div>
+                    </div>
+                    <div class="row">
+                        <label for="inputAddress1" class="col-lg-2 control-label"><span
+                                class="align-left"> Address Line 1 </span></label>
+
+                        <div class="col-lg-3">
+                            <input type="text" ng-model="scouts.editingScout.address.line1" class="form-control"
+                                   id="inputAddress1"
+                                   placeholder="Address Line 1">
+                        </div>
+                    </div>
+                    <div class="row">
+                        <label for="inputAddress2" class="col-lg-2 control-label">Address Line 2</label>
+
+                        <div class="col-lg-3">
+                            <input type="text" ng-model="scouts.editingScout.address.line2" class="form-control"
+                                   id="inputAddress2"
+                                   placeholder="Address Line 2">
+                        </div>
+                    </div>
+                    <div class="row">
+                        <label for="inputCity" class="col-lg-2 control-label">City</label>
+
+                        <div class="col-lg-2">
+                            <input type="text" ng-model="scouts.editingScout.address.city" class="form-control"
+                                   id="inputCity"
+                                   placeholder="City">
+                        </div>
+                        <label for="inputState" class="col-lg-1 control-label">State</label>
+
+                        <div class="col-lg-1">
+                            <input type="text" ng-model="scouts.editingScout.address.state" class="form-control"
+                                   id="inputState"
+                                   placeholder="St">
+                        </div>
+                        <label for="inputZip" class="col-lg-1 control-label">Zip</label>
+
+                        <div class="col-lg-2">
+                            <input type="text" ng-model="scouts.editingScout.address.zip" class="form-control"
+                                   id="inputZip"
+                                   placeholder="Zip">
+                        </div>
+                    </div>
+
+                </div>
+                <div class="form-group" ng-show="scouts.achievements">Achievements</div>
+                <div class="form-group" ng-show="scouts.awards">
+                    <div class="container col-lg-2" ng-controller="awardsCtrl as awards">
+                        <table class="table table-striped table-hover table-bordered">
+                            <tr ng-repeat="award in awards.awards | orderBy: 'name': false">
+                                <td>{{award.name}}</td><td><input type="checkbox" ng-checked='scouts.hasAward(scouts.editingScout,award)'> </td>
+                            </tr>
+                        </table>
+                    </div>
+                </div>
+
+                <button type="submit" ng-click="scouts.saveScout()" class="btn btn-default">Save</button>
+            </fieldset>
+        </form>
+    </div>
+</div>
+
+<script src="js/app.js"></script>
+<script src="js/controllers/headerCtrl.js"></script>
+<script src="js/controllers/scoutsCtrl.js"></script>
+<script src="js/controllers/awardsCtrl.js"></script>
+<script src="js/services/services.js"></script>
+</body>
+</html>

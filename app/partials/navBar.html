@@ -1,0 +1,24 @@
+<div class="navbar navbar-default navbar-fixed-top" ng-controller="headerCtrl as header">
+    <div class="container">
+        <div class="navbar-header">
+            <span class="navbar-brand"> Pack Tracker </span>
+            <button class="navbar-toggle collapsed"
+                    data-toggle="collapse" data-target="#navbar-main">
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+        </div>
+
+        <div class="navbar-collapse collapse" id="navbar-main">
+            <ul class="nav navbar-nav">
+                <div ng-repeat="navitem in header.headerItems" class="nav navbar-nav">
+                    <li class="nav" ng-class="{ active: isActive(navitem.url)}"><a href="{{navitem.url}}">{{navitem.name}}</a></li>
+                </div>
+            </ul>
+            <ul class="nav navbar-nav navbar-right">
+                <li class="nav"><a href="login.html">login</a></li>
+            </ul>
+        </div>
+    </div>
+</div>
